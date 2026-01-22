@@ -180,22 +180,15 @@ public class AlertService {
 
             // 5. Construire le message
             String message = String.format(
-                    "Bonjour Dr %s,\n\n" +
-                            "Le patient %s %s (ID: %d) n'a pas enregistré de mesure de glycémie depuis %d jours.\n\n" +
-                            "Informations patient :\n" +
-                            "- Type de diabète : %s\n" +
-                            "- Traitement : %s\n" +
+                    "Bonjour Dr,\n\n" +
+                            "Le patient %s %s n'a pas enregistré de mesure de glycémie depuis %d jours.\n\n" +
                             "- Téléphone : %s\n\n" +
                             "Il est recommandé de contacter le patient pour vérifier son état.\n\n" +
                             "Cordialement,\n" +
                             "Système de Suivi Diabète - SUIVIDIABETE SN",
-                    medecin.getNom(),
                     patient.getPrenom(),
                     patient.getNom(),
-                    patient.getId(),
                     joursInactivite,
-                    patient.getTypeDiabete(),
-                    patient.getTraitement(),
                     patient.getTelephone()
             );
 
@@ -235,8 +228,8 @@ public class AlertService {
                         "📊 Détails de la mesure :\n" +
                         "- Valeur : %.2f g/L\n" +
                         "- Date : %s\n" +
-                        "- Moment : %s\n" +
-                        "- Repas : %s\n\n" +
+                        "- Moment de la prise : %s\n" +
+                        "- Type de repas : %s\n\n" +
                         "💡 Recommandation :\n" +
                         "%s\n\n" +
                         "Prenez soin de vous,\n" +
@@ -253,40 +246,27 @@ public class AlertService {
 
     private String buildDoctorMessage(PatientDTO patient, MedecinDTO medecin, GlycemieEvent event) {
         return String.format(
-                "Bonjour Dr %s,\n\n" +
-                        "🚨 ALERTE CRITIQUE pour le patient %s %s (ID: %d)\n\n" +
+                "Bonjour Dr,\n\n" +
+                        "🚨 ALERTE CRITIQUE pour le patient %s %s\n\n" +
                         "📊 Mesure de glycémie :\n" +
                         "- Type d'alerte : %s\n" +
                         "- Valeur mesurée : %.2f g/L\n" +
                         "- Date de mesure : %s\n" +
-                        "- Moment : %s\n" +
-                        "- Repas : %s\n\n" +
-                        "👤 Informations patient :\n" +
-                        "- Nom complet : %s %s\n" +
-                        "- Type de diabète : %s\n" +
-                        "- Traitement : %s\n" +
+                        "- Moment de la prise : %s\n" +
+                        "- Type de repas : %s\n\n" +
                         "- Téléphone : %s\n" +
-                        "- Adresse : %s, %s\n\n" +
                         "⚠️ Action recommandée :\n" +
                         "Contacter le patient rapidement pour évaluer sa situation.\n\n" +
                         "Cordialement,\n" +
                         "Système de Suivi Diabète - SUIVIDIABETE SN",
-                medecin.getNom(),
                 patient.getPrenom(),
                 patient.getNom(),
-                patient.getId(),
                 event.getTypeAlerte().getLibelle(),
                 event.getValeurGlycemie(),
                 event.getDateEnregistrement(),
                 event.getMoment() != null ? event.getMoment() : "Non spécifié",
                 event.getRepas() != null ? event.getRepas() : "Non spécifié",
-                patient.getPrenom(),
-                patient.getNom(),
-                patient.getTypeDiabete(),
-                patient.getTraitement(),
-                patient.getTelephone(),
-                patient.getAdresse(),
-                patient.getVille()
+                patient.getTelephone()
         );
     }
 
